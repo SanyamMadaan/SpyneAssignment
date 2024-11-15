@@ -6,6 +6,15 @@ const UserSchema=mongoose.Schema({
     username:String
 })
 
-const User=mongoose.model('User',UserSchema);
+const CarSchema=mongoose.Schema({
+    title:String,
+    description:String,
+    images:[String],
+    tags:[String],
+    price:Number
+})
 
-module.exports=User;
+const User=mongoose.model('User',UserSchema);
+const Car=mongoose.model('Car',CarSchema);
+
+module.exports={User,Car};

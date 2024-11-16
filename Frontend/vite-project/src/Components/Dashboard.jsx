@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import Slider from "react-slick"; // Import react-slick component
 import "slick-carousel/slick/slick.css"; // Import slick-carousel CSS
 import "slick-carousel/slick/slick-theme.css"; // Import slick-carousel theme CSS
+import { MdOutlineDeleteOutline } from "react-icons/md";
+import { GoPencil } from "react-icons/go";
 
 export default function Dashboard() {
     const [cars, setCars] = useState([]);
@@ -26,6 +28,8 @@ export default function Dashboard() {
     }
 
     async function DeleteCar(carid) {
+        let action=confirm('Are you sure to Delete this Car?');
+        if(!action) return;
         try {
             const response = await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/v1/products/deleteProduct/${carid}`);
             if (response.status === 200) {
@@ -42,7 +46,7 @@ export default function Dashboard() {
             {loading ? (
                 <>Loading...</>
             ) : (
-                <div className="bg-black h-fit md:h-full">
+                <div className="bg-black h-screen  md:h-full">
                     <div className="mb-5">
                         <h2 className="p-3 text-white text-xl md:text-2xl md:text-center lg:text-3xl md:pl-3 italic font-bold">
                             Manage your Car Application
@@ -55,7 +59,7 @@ export default function Dashboard() {
                         </button>
                     </div>
                     <div className="flex justify-center flex-wrap mt-4">
-                        {cars.map((car) => {
+                        {cars && cars.map((car) => {
                             const isSingleImage = car.images.length === 1;
                             const sliderSettings = {
                                 dots: true,
@@ -72,7 +76,7 @@ export default function Dashboard() {
                                     <Slider {...sliderSettings}>
                                         {car.images.map((image, index) => (
                                             <div key={index}>
-                                                <img src={image} alt={`Slide ${index}`} className="w-full h-48 md:h-full object-cover" />
+                                                <img src={image} alt={`Slide ${index}`} className="w-full h-48 md:h-2/4 object-cover" />
                                             </div>
                                         ))}
                                     </Slider>
@@ -89,20 +93,26 @@ export default function Dashboard() {
                                             </div>
                                         ))}
                                     </div>
-                                    <div className="flex justify-center m-2 mb-4">
-                                        <button className="p-2 m-2 cursor-pointer border border-white bg-white rounded-md font-semibold uppercase">
+                                    <div className="flex justify-between m-2 mb-4">
+                                        {/* <button className="p-2 m-2 cursor-pointer border border-white bg-white rounded-md font-semibold uppercase">
                                             Book Test Drive
+                                        </button> */}
+                                        <button className="p-2 m-2 cursor-pointer border border-white bg-white rounded-md font-semibold uppercase" onClick={()=>{
+                                            navigate(`/productdetail/${car._id}`)
+                                        }}>
+                                            View Details
                                         </button>
-                                    </div>
-                                    <div className="flex items-end justify-end m-2 p-2">
-                                        <button className="bg-green-800 cursor-pointer">Edit</button>
-                                        <button
-                                            className="bg-red-800 cursor-pointer"
+                                        <div className="md:flex">
+                                        <GoPencil className="cursor-pointer m-2 p-2  text-4xl bg-green-500"/>
+                                        <MdOutlineDeleteOutline  
                                             onClick={() => DeleteCar(car._id)}
-                                        >
-                                            Delete
-                                        </button>
+                                            className="bg-red-800 text-white text-4xl cursor-pointer m-2 p-2"
+                                            />
+                                        </div>
                                     </div>
+                    
+                    
+                                    
                                 </div>
                             );
                         })}

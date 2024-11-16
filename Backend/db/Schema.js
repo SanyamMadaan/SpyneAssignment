@@ -3,7 +3,11 @@ const mongoose=require('mongoose');
 const UserSchema=mongoose.Schema({
     email:String,
     password:String,
-    username:String
+    username:String,
+    Cars:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Car',
+    }]
 })
 
 const CarSchema=mongoose.Schema({

@@ -13,6 +13,33 @@ const InputSchema=z.object({
     username:z.string().optional()
 })
 
+// Swagger doc for Login
+/**
+ * @swagger
+ * /api/v1/user/login:
+ *   post:
+ *     summary: Log in a user
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *               password:
+ *                 type: string
+ *                 minLength: 8
+ *     responses:
+ *       200:
+ *         description: Login successful
+ *       400:
+ *         description: Invalid email or password
+ *       500:
+ *         description: Server error
+ */
 router.post('/login',async(req,res)=>{
     const {email,password}=req.body;
     
@@ -37,6 +64,36 @@ router.post('/login',async(req,res)=>{
         res.status(500).json({message:'server error'});
     }
 })
+
+// Swagger doc for Create User
+/**
+ * @swagger
+ * /api/v1/user/createUser:
+ *   post:
+ *     summary: Create a new user
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *               password:
+ *                 type: string
+ *                 minLength: 8
+ *               username:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: User created successfully
+ *       400:
+ *         description: User already exists or validation error
+ *       500:
+ *         description: Server error
+ */
 
 router.post('/createUser',async(req,res)=>{
     const {username,email,password}=req.body;

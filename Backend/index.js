@@ -15,8 +15,11 @@ app.use(express.json());
 app.use('/api/v1/user',UserRouter);
 app.use('/api/v1/products',ProductRouter);
 
+const swaggerOptions={
+    swaggerUrl:'/api/v1/docs/swagger.json'
+}
 //set up Swagger UI
-app.use('/api/v1/docs',swaggerUi.serve,swaggerUi.setup(swaggerSpec));
+app.use('/api/v1/docs',swaggerUi.serve,swaggerUi.setup(swaggerSpec,swaggerOptions));
 
 app.listen(PORT,()=>{
     console.log(`App is listening at http://localhost:${PORT}`);

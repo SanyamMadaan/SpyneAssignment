@@ -10,6 +10,7 @@ import { GoPencil } from "react-icons/go";
 export default function Dashboard() {
     const [cars, setCars] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [search,setSearch] = useState("");
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -27,6 +28,10 @@ export default function Dashboard() {
         }
     }
 
+    async function SearchSpecificCar(){
+
+    }
+    
     async function DeleteCar(carid) {
         let action=confirm('Are you sure to Delete this Car?');
         if(!action) return;
@@ -46,7 +51,7 @@ export default function Dashboard() {
             {loading ? (
                 <>Loading...</>
             ) : (
-                <div className="bg-black h-screen  md:h-full">
+                <div className="bg-black h-fit  md:h-full">
                     <div className="mb-5">
                         <h2 className="p-3 text-white text-xl md:text-2xl md:text-center lg:text-3xl md:pl-3 italic font-bold">
                             Manage your Car Application
@@ -57,6 +62,10 @@ export default function Dashboard() {
                         >
                             Add Car
                         </button>
+                    </div>
+                    <div className="flex justify-center m-5">
+                        <input type="text" placeholder="Search for any keyword" className="px-5 py-2  md:w-1/2" onChange={(e)=>setSearch(e.target.value)} />
+                        <button className="bg-white text-black font-bold cursor-pointer px-5 py-2 border border-l border-2-black" onClick={()=>SearchSpecificCar}>Search</button>
                     </div>
                     <div className="flex justify-center flex-wrap mt-4">
                         {cars && cars.map((car) => {
@@ -103,7 +112,9 @@ export default function Dashboard() {
                                             View Details
                                         </button>
                                         <div className="md:flex">
-                                        <GoPencil className="cursor-pointer m-2 p-2  text-4xl bg-green-500"/>
+                                        <GoPencil className="cursor-pointer m-2 p-2  text-4xl bg-green-500"
+                                        onClick={()=>navigate(`/editdetails/${car._id}`)}
+                                        />
                                         <MdOutlineDeleteOutline  
                                             onClick={() => DeleteCar(car._id)}
                                             className="bg-red-800 text-white text-4xl cursor-pointer m-2 p-2"

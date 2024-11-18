@@ -31,32 +31,36 @@ export default function Login(){
                 navigate('/dashboard');
             }
         }catch(e){
-            setButton("Sign In");
-            alert('error while creating user');
             console.log(e);
+            setButton("Sign In");
+            if(e.response.data.message){
+                alert(e.response.data.message);
+                return;
+            }
+            alert('Error while Signing in');
         }
         }
     
         return (
-            <div className="bg-black md:bg-gray-600 h-fit md:h-screen   flex justify-center items-center">
-                <div className="pt-20 md:pt-10 md:h-4/5 md:flex md:border md:border-black rounded-md md:bg-black mt-20 ">
-                <div className='image px-2 lg:px-5 md:w-1/2  '>
-                      <img className="rounded-md p-2 md:h-fit" src={carImage2}/>
-                    </div>
+            <div className="bg-black h-fit   flex justify-center items-center">
+                <div className=" md:flex md:border md:border-black rounded-md md:bg-black pt-10 ">
+                <div className='image px-2 mt-10 md:mt-14   '>
+                      <img className="rounded-lg p-2 md:h-4/5 " src={carImage2}/>
+                </div>
                     <div className='form md:w-1/2'>
-                    <h1 className="text-white font-medium text-2xl text-center mt-10 md:mt-2">Sign In</h1>
+                    <h1 className="text-white font-semibold text-2xl md:text-3xl text-center mt-10 md:mt-16">Sign In</h1>
                         <div className="flex justify-center items-center  mt-5 mb-10 md:mb-5">
                           <p className='font-semibold text-white'>New User?</p>
                           <a className='ml-2 text-white cursor-pointer'><u onClick={()=>{
                             navigate('/');
                             }}>Create an account</u></a>
                         </div>
-                        <div className='flex justify-center items-center'>
+                        <div className='flex justify-center '>
                           <form onSubmit={handleSubmit} className='pb-5'>
-                            <input type="email" className='my-4 p-3 w-full rounded-md' placeholder="Email" onChange={(e)=>setEmail(e.target.value)}  required/><br/>
+                            <input type="email" className='my-4 p-3  rounded-md' placeholder="Email" onChange={(e)=>setEmail(e.target.value)}  required/><br/>
                             <input type="password" className='my-4 p-3 w-full rounded-md' placeholder="Enter your password" onChange={(e)=>setPassword(e.target.value)} required/><br/>
                             <button className='bg-purple-600 px-14 w-full py-3 rounded-md my-2 cursor-hover text-white' type="submit">{button}</button>
-                            <div className='text-white border border-white rounded-md p-2'>
+                            <div className='text-white border border-white rounded-md p-2 mt-2'>
                                 <h1 className='font-semibold'>Test Details</h1>
                                 <h2>email: abc@gmail.com</h2>
                                 <h2>password: 12345678</h2>

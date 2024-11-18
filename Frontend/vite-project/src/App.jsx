@@ -5,6 +5,7 @@ import Dashboard from './Components/Dashboard'
 import AddCar from "./Components/AddCar"
 import ProductDetail from "./Components/ProductDetail"
 import {BrowserRouter,Routes,Route} from 'react-router-dom';
+import EditForm from "./Components/EditForm"
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard/>}></Route>
         <Route path="/addcar" element={<AddCar/>}></Route>
         <Route path="/productdetail/:id" element={<ProductDetail/>}></Route>
+        <Route path="/editdetails/:id" element={<EditForm/>}></Route>
       </Routes>
     </BrowserRouter>
   )

@@ -34,16 +34,24 @@ export default function SignUp(){
         }
     }catch(e){
         setButton("Create account");
+        if(e.config.message){
+          alert(e.config.message);
+          return;
+        }
+        else if(e.response.data.message){
+          alert(e.response.data.message);
+          return;
+      }
         alert('error while creating user');
         console.log(e);
     }
     }
 
     return (
-        <div className="bg-black md:bg-gray-600 h-screen   flex justify-center items-center">
+        <div className="bg-black  h-screen   flex justify-center items-center">
             <div className=" md:flex md:border md:border-black rounded-md md:bg-black">
                 <div className='image px-2 mt-5 lg:px-5 '>
-                  <img className="rounded-md p-2 " src={loginpagecar}/>
+                  <img className="rounded-lg p-2 " src={loginpagecar}/>
                 </div>
                 <div className='form md:w-1/2'>
                 <h1 className="text-white font-medium text-3xl text-center mt-10 lg:mt-0 md:mt-2">Create an account</h1>

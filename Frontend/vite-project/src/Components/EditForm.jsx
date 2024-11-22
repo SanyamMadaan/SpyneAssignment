@@ -55,6 +55,7 @@ export default function EditForm() {
     e.preventDefault();
     const imageUrls = await uploadFiles();
     console.log(imageUrls);
+    const token=localStorage.getItem('token');
 
     try {
       console.log('inside try');
@@ -66,6 +67,11 @@ export default function EditForm() {
           images: imageUrls, // Use the array of image URLs
           tags,
           price
+        },
+        {
+          headers:{
+            token,
+          }
         }
       );
       const carId = res.data._id;
@@ -73,6 +79,10 @@ export default function EditForm() {
       navigate('/dashboard');
     } catch (error) {
       setButton("Update Car");
+      if(error.response.data.message=="Token is required"){
+        alert("You don't have access to edit the product");
+        return;
+      }
       console.error("Error while updating car:", error);
       alert("Error while updating car");
     }

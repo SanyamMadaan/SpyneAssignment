@@ -41,6 +41,7 @@ export default function AddCar() {
 
     try {
       console.log('inside try');
+      const token=localStorage.getItem('token');
       const res = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/products/createProduct`,
         {
@@ -49,6 +50,9 @@ export default function AddCar() {
           images: imageUrls, // Use the array of image URLs
           tags,
           price
+        },
+        {
+          headers:{token}
         }
       );
       const carId = res.data._id;
@@ -56,6 +60,10 @@ export default function AddCar() {
       navigate('/dashboard');
     } catch (error) {
       setButton("Add Car");
+      if(error.response.data.message=="Token is required"){
+        alert("You don't have access to Add the product");
+        return;
+      }
       console.error("Error adding car:", error);
       alert("Error adding car");
     }

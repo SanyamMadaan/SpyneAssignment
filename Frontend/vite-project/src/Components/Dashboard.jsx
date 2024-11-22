@@ -34,14 +34,23 @@ export default function Dashboard() {
     
     async function DeleteCar(carid) {
         let action=confirm('Are you sure to Delete this Car?');
+        const token=localStorage.getItem('token');
         if(!action) return;
         try {
-            const response = await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/v1/products/deleteProduct/${carid}`);
+            const response = await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/v1/products/deleteProduct/${carid}`,{
+                headers:{
+                    token
+                }
+            });
             if (response.status === 200) {
                 alert('Car deleted successfully');
                 fetchCars(); // Refresh the list after deletion
             }
-        } catch (e) {
+        } catch (error) {
+            if(error.response.data.message=="Token is required"){
+                alert("You don't have access to Delete the product");
+                return;
+              }
             alert('Something went wrong. Please try again later.');
         }
     }
